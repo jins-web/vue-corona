@@ -4,10 +4,16 @@
       <el-header><BasicHeader /></el-header>
       <el-container>
         <el-aside width="menuWidth"
-          ><SideMenu :isCollapse="isCollapse"
+          ><SideMenu
+            :isCollapse="isCollapse"
+            @menuSelect="
+              (item) => {
+                $emit('menuSelect', item);
+              }
+            "
         /></el-aside>
         <el-container>
-          <el-main>Main</el-main>
+          <el-main><slot></slot></el-main>
           <el-footer>Footer</el-footer>
         </el-container>
       </el-container>

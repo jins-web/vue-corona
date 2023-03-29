@@ -13,6 +13,7 @@
           </template>
           <el-menu-item-group>
             <el-menu-item
+              @click="handleSelect(item)"
               v-for="item in menu.submenus"
               :key="item.index"
               :index="item.index"
@@ -37,28 +38,33 @@ export default {
   props: {
     isCollapse: Boolean,
   },
-  setup() {
+  setup(props, context) {
     const state = reactive({
       menuItem: [
         {
           label: "코로나 현황 요약",
-          index: "corona-loca",
+          index: "corona-briefing",
           icon: "location",
           submenus: [
             {
               label: "국가별 요약",
-              index: "sample1",
+              index: "internationalCases",
+              path: "corona",
+            },
+            {
+              label: "국내 요약",
+              index: "DomesticCases",
               path: "corona",
             },
           ],
         },
         {
           label: "코로나 분석",
-          index: "corona-briefing",
+          index: "corona-briefing2",
           icon: "setting",
           submenus: [
             {
-              label: "국가별 요약",
+              label: "국가별 요약2",
               index: "sample2",
               path: "corona",
             },
@@ -66,8 +72,12 @@ export default {
         },
       ],
     });
+    const handleSelect = (item) => {
+      context.emit("menuSelect", item);
+    };
     return {
       ...toRefs(state),
+      handleSelect,
     };
   },
 };
